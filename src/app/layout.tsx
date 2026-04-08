@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
+import { Bebas_Neue, Inter } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin', 'latin-ext'],
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bebas',
+})
+
+const inter = Inter({
+  subsets: ['latin', 'latin-ext', 'cyrillic'],
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
@@ -19,8 +25,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+    <html
+      lang="ru"
+      className={`${inter.variable} ${bebasNeue.variable} h-full antialiased`}
+    >
+      <body
+        data-theme="light"
+        className="flex min-h-full flex-col bg-[var(--page-bg)] font-sans text-[var(--page-text)] transition-[background-color,color] duration-[400ms] ease-out"
+      >
+        {children}
+      </body>
     </html>
   )
 }

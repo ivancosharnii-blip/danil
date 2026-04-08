@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Work, WorkType } from '@/types'
 import WorkCard from './WorkCard'
 
@@ -13,23 +13,44 @@ const tabs: { key: WorkType; label: string }[] = [
   { key: 'tattoo', label: 'Тату эскизы' },
 ]
 
+export function BodyThemeFromWorkType({ type }: { type: WorkType }) {
+  useEffect(() => {
+    document.body.setAttribute(
+      'data-theme',
+      type === 'painting' ? 'light' : 'dark',
+    )
+    return () => {
+      document.body.setAttribute('data-theme', 'light')
+    }
+  }, [type])
+  return null
+}
+
 export default function Gallery({ works }: GalleryProps) {
   const [activeTab, setActiveTab] = useState<WorkType>('painting')
+
+  useEffect(() => {
+    document.body.setAttribute(
+      'data-theme',
+      activeTab === 'painting' ? 'light' : 'dark',
+    )
+  }, [activeTab])
 
   const filtered = works.filter((w) => w.type === activeTab)
 
   return (
     <section id="gallery" className="w-full">
-      <div className="mb-8 flex justify-center gap-2">
+      <div className="mb-8 flex flex-wrap justify-center gap-8">
         {tabs.map((tab) => (
           <button
             key={tab.key}
+            type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`rounded-full px-6 py-2.5 text-sm font-medium transition ${
+            className={`relative rounded-none border-0 bg-transparent px-1 py-2 text-sm font-medium tracking-wide transition-colors ${
               activeTab === tab.key
-                ? 'bg-zinc-900 text-white shadow-sm'
-                : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
-            }`}
+                ? "text-[var(--page-text)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:bg-[var(--page-accent)] after:content-['']"
+                : 'text-[var(--page-muted)] hover:text-[var(--page-text)]'
+            } `}
           >
             {tab.label}
           </button>
@@ -37,11 +58,11 @@ export default function Gallery({ works }: GalleryProps) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="py-20 text-center text-sm text-zinc-400">
+        <p className="py-20 text-center text-sm text-[var(--page-muted)]">
           Пока нет работ в этой категории
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[2px] md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((work) => (
             <WorkCard key={work.id} work={work} />
           ))}

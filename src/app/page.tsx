@@ -16,25 +16,28 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center gap-12 px-6 py-12">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center gap-12 px-6 py-12 transition-[color] duration-[400ms]">
         <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+          <h1 className="font-heading text-3xl tracking-wide text-[var(--page-text)] uppercase sm:text-4xl">
             Картины &amp; Тату&nbsp;эскизы
           </h1>
-          <p className="mx-auto mt-3 max-w-lg text-base text-zinc-500">
-            Авторские работы — живопись, графика и уникальные эскизы для татуировок
+          <p className="mx-auto mt-3 max-w-lg text-base text-[var(--page-muted)]">
+            Авторские работы — живопись, графика и уникальные эскизы для
+            татуировок
           </p>
         </div>
 
         <Gallery works={works} />
 
-        <div className="w-full border-t border-zinc-200 pt-12 text-center">
-          <h2 className="mb-6 text-lg font-semibold text-zinc-900">Связаться со мной</h2>
+        <div className="w-full border-t border-[var(--page-border)] pt-12 text-center transition-[border-color] duration-[400ms]">
+          <h2 className="mb-6 font-heading text-2xl tracking-wide text-[var(--page-text)] uppercase sm:text-3xl">
+            Связаться со мной
+          </h2>
           <ContactButtons />
         </div>
       </main>
 
-      <footer className="border-t border-zinc-200 py-6 text-center text-xs text-zinc-400">
+      <footer className="border-t border-[var(--page-border)] py-6 text-center text-xs text-[var(--page-muted)] transition-[border-color,color] duration-[400ms]">
         &copy; {new Date().getFullYear()} Danil Art
       </footer>
     </>

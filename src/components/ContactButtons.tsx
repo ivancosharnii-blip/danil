@@ -51,7 +51,7 @@ export default function ContactButtons() {
           href={c.href}
           target={c.href.startsWith('http') ? '_blank' : undefined}
           rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-700 shadow-sm transition hover:border-zinc-400 hover:text-zinc-900"
+          className="inline-flex items-center gap-2 rounded-none border border-[var(--page-accent)] bg-transparent px-5 py-2.5 text-sm font-medium text-[var(--page-text)] transition-[color,border-color,background-color] duration-[400ms] hover:bg-[var(--page-text)] hover:text-[var(--page-bg)]"
         >
           <c.icon width={18} height={18} />
           {c.label}
