@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import type { Work } from '@/types'
 import Header from '@/components/Header'
-import ContactButtons from '@/components/ContactButtons'
 import Gallery from '@/components/Gallery'
 
 export default async function HomePage() {
@@ -31,13 +30,6 @@ export default async function HomePage() {
         <Suspense fallback={<div className="min-h-[40vh]" aria-hidden />}>
           <Gallery works={works} />
         </Suspense>
-
-        <div className="mx-auto w-full max-w-6xl border-t border-[var(--page-border)] px-6 pt-12 pb-12 text-center transition-[border-color] duration-[400ms]">
-          <h2 className="mb-6 font-heading text-2xl tracking-wide text-[var(--page-text)] uppercase sm:text-3xl">
-            Связаться со мной
-          </h2>
-          <ContactButtons />
-        </div>
       </main>
 
       <footer className="border-t border-[var(--page-border)] py-6 text-center text-xs text-[var(--page-muted)] transition-[border-color,color] duration-[400ms]">

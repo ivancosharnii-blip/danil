@@ -18,14 +18,23 @@ export default function PortfolioForm({ portfolio }: { portfolio: Portfolio | nu
   async function handleSave() {
     setSaving(true)
     const supabase = createClient()
-    if (portfolio?.id) {
-      await supabase.from('portfolio').update({ name, bio, updated_at: new Date().toISOString() }).eq('id', portfolio.id)
+    const { error } = portfolio?.id
+      ? await supabase
+          .from('portfolio')
+          .update({ name, bio, updated_at: new Date().toISOString() })
+          .eq('id', portfolio.id)
+      : await supabase
+          .from('portfolio')
+          .insert({ name, bio })
+
+    if (error) {
+      console.error('Ошибка сохранения:', error)
+      alert('Ошибка: ' + error.message)
     } else {
-      await supabase.from('portfolio').insert({ name, bio })
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
     }
     setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
   }
 
   return (

@@ -1,6 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -21,15 +22,23 @@ function HeaderInner() {
     <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-4 backdrop-blur-md transition-[background-color,border-color] duration-[400ms] ease-out">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6">
         <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/"
-            className="inline-block shrink-0 text-[var(--page-text)] transition-opacity hover:opacity-80"
-          >
-            <svg width="120" height="48" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <text x="0" y="32" fontFamily="serif" fontSize="36" fontWeight="700" fill="currentColor" letterSpacing="-1">DA</text>
-              <line x1="0" y1="42" x2="120" y2="42" stroke="currentColor" strokeWidth="1.5"/>
-              <text x="0" y="48" fontFamily="sans-serif" fontSize="8" fill="currentColor" letterSpacing="4">ART STUDIO</text>
-            </svg>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <Image
+              src="/logo-black.png"
+              alt="Logo"
+              width={48}
+              height={40}
+              style={{ objectFit: 'contain', display: 'block' }}
+              className="logo-black"
+            />
+            <Image
+              src="/logo-white.png"
+              alt="Logo"
+              width={48}
+              height={40}
+              style={{ objectFit: 'contain', display: 'none' }}
+              className="logo-white"
+            />
           </Link>
           <nav className="flex flex-wrap items-center justify-end gap-6 text-sm font-medium tracking-wide text-[var(--page-muted)]">
             <Link

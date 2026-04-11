@@ -32,3 +32,16 @@ body {
   background-color: var(--page-bg);
   color: var(--page-text);
 }
+
+body[data-theme='dark'] .logo-black {
+  display: none !important;
+}
+body[data-theme='dark'] .logo-white {
+  display: block !important;
+}
+body[data-theme='light'] .logo-black {
+  display: block !important;
+}
+body[data-theme='light'] .logo-white {
+  display: none !important;
+}
