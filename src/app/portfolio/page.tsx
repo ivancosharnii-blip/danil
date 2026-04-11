@@ -1,11 +1,27 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import Header from '@/components/Header'
 import { BodyThemeFromWorkType } from '@/components/Gallery'
+import { useLocale } from '@/lib/locale-context'
+import { t } from '@/lib/i18n'
 
-export default async function PortfolioPage() {
-  const supabase = await createClient()
-  const { data: portfolio } = await supabase.from('portfolio').select('*').single()
+type PortfolioRow = { name?: string | null; bio?: string | null }
+
+export default function PortfolioPage() {
+  const { locale } = useLocale()
+  const [portfolio, setPortfolio] = useState<PortfolioRow | null>(null)
+
+  useEffect(() => {
+    const supabase = createClient()
+    void supabase
+      .from('portfolio')
+      .select('*')
+      .single()
+      .then(({ data }) => setPortfolio(data))
+  }, [])
 
   return (
     <>
@@ -24,8 +40,11 @@ export default async function PortfolioPage() {
             />
           </div>
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', letterSpacing: '0.15em', textAlign: 'center' }}>
-            {portfolio?.name?.toUpperCase() || 'DANIL'}
+            {portfolio?.name?.toUpperCase() || t(locale, 'portfolioDefaultName')}
           </h1>
+          <p style={{ textAlign: 'center', lineHeight: 1.6, maxWidth: '560px', opacity: 0.85, fontSize: '1rem' }}>
+            {t(locale, 'portfolioSubtitle')}
+          </p>
           <div style={{ width: '60px', height: '1px', background: 'currentColor', opacity: 0.3 }} />
           <p style={{ textAlign: 'center', lineHeight: 1.8, maxWidth: '560px', opacity: 0.8, fontSize: '1rem' }}>
             {portfolio?.bio || ''}

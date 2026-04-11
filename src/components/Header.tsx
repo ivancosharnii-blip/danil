@@ -1,16 +1,25 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useLocale } from '@/lib/locale-context'
+import { translations, type Locale } from '@/lib/i18n'
 
 const GALLERY_TABS = [
-  { key: 'painting' as const, label: 'Картины' },
-  { key: 'tattoo' as const, label: 'Тату эскизы' },
+  { key: 'painting' as const, labelKey: 'paintings' as const },
+  { key: 'tattoo' as const, labelKey: 'tattoo' as const },
+]
+
+const FLAGS: { locale: Locale; flag: string }[] = [
+  { locale: 'ru', flag: '🇷🇺' },
+  { locale: 'en', flag: '🇬🇧' },
+  { locale: 'cs', flag: '🇨🇿' },
 ]
 
 function HeaderInner() {
+  const { locale, setLocale } = useLocale()
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -18,42 +27,111 @@ function HeaderInner() {
   const tabParam = searchParams.get('tab')
   const activeGalleryTab = tabParam === 'tattoo' ? 'tattoo' : 'painting'
 
+  const [isDark, setIsDark] = useState(false)
+  const [navOpacity, setNavOpacity] = useState(1)
+  const prevIsDarkRef = useRef<boolean | null>(null)
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.getAttribute('data-theme') === 'dark')
+    })
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] })
+    setIsDark(document.body.getAttribute('data-theme') === 'dark')
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (prevIsDarkRef.current === null) {
+      prevIsDarkRef.current = isDark
+      return
+    }
+    if (prevIsDarkRef.current === isDark) return
+    prevIsDarkRef.current = isDark
+    setNavOpacity(0)
+    const id = window.setTimeout(() => setNavOpacity(1), 300)
+    return () => clearTimeout(id)
+  }, [isDark])
+
   return (
     <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-4 backdrop-blur-md transition-[background-color,border-color] duration-[400ms] ease-out">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6">
-        <div className="flex items-center justify-between gap-4">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-            <Image
-              src="/logo-black.png"
-              alt="Logo"
-              width={48}
-              height={40}
-              style={{ objectFit: 'contain', display: 'block' }}
-              className="logo-black"
-            />
-            <Image
-              src="/logo-white.png"
-              alt="Logo"
-              width={48}
-              height={40}
-              style={{ objectFit: 'contain', display: 'none' }}
-              className="logo-white"
-            />
-          </Link>
-          <nav className="flex flex-wrap items-center justify-end gap-6 text-sm font-medium tracking-wide text-[var(--page-muted)]">
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr auto 1fr',
+            alignItems: 'center',
+          }}
+        >
+          <nav
+            className="flex flex-wrap items-center gap-6 text-sm font-medium tracking-wide text-[var(--page-muted)]"
+            style={{
+              gridColumn: isDark ? 3 : 1,
+              gridRow: 1,
+              justifySelf: isDark ? 'end' : 'start',
+              opacity: navOpacity,
+              transition: 'opacity 0.3s',
+            }}
+          >
             <Link
               href="/portfolio"
               className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
             >
-              Портфолио
+              {translations[locale].portfolio}
             </Link>
             <Link
               href="/contacts"
               className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
             >
-              Контакты
+              {translations[locale].contacts}
             </Link>
+            <div style={{ display: 'flex', gap: '4px' }}>
+              {FLAGS.map(({ locale: l, flag }) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setLocale(l)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1.2rem',
+                    opacity: locale === l ? 1 : 0.4,
+                    padding: '2px 4px',
+                  }}
+                >
+                  {flag}
+                </button>
+              ))}
+            </div>
           </nav>
+          <div
+            style={{
+              gridColumn: 2,
+              gridRow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+              <Image
+                src="/logo-black.png"
+                alt="Logo"
+                width={48}
+                height={40}
+                style={{ objectFit: 'contain', display: 'block' }}
+                className="logo-black"
+              />
+              <Image
+                src="/logo-white.png"
+                alt="Logo"
+                width={48}
+                height={40}
+                style={{ objectFit: 'contain', display: 'none' }}
+                className="logo-white"
+              />
+            </Link>
+          </div>
+          <div style={{ gridColumn: isDark ? 1 : 3, gridRow: 1 }} aria-hidden />
         </div>
 
         {isHome ? (
@@ -69,7 +147,7 @@ function HeaderInner() {
                     : 'text-[var(--page-muted)] hover:text-[var(--page-text)]'
                 } `}
               >
-                {tab.label}
+                {translations[locale][tab.labelKey]}
               </button>
             ))}
           </nav>

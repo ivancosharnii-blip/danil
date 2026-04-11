@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Inter } from 'next/font/google'
+import { LocaleProvider } from '@/lib/locale-context'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -33,7 +34,7 @@ export default function RootLayout({
         data-theme="light"
         className="flex min-h-full flex-col bg-[var(--page-bg)] font-sans text-[var(--page-text)] transition-[background-color,color] duration-[400ms] ease-out"
       >
-        {children}
+        <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
   )

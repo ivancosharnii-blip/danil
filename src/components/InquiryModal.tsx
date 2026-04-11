@@ -1,5 +1,7 @@
 'use client'
 import { useState } from 'react'
+import { useLocale } from '@/lib/locale-context'
+import { t } from '@/lib/i18n'
 
 interface Props {
   work: { id: string; title: string }
@@ -7,6 +9,7 @@ interface Props {
 }
 
 export default function InquiryModal({ work, onClose }: Props) {
+  const { locale } = useLocale()
   const [form, setForm] = useState({ name: '', surname: '', email: '', phone: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
@@ -14,7 +17,7 @@ export default function InquiryModal({ work, onClose }: Props) {
 
   async function handleSubmit() {
     if (!form.name || !form.email || !form.phone) {
-      setError('Заполните имя, email и телефон')
+      setError(t(locale, 'errorRequired'))
       return
     }
     setLoading(true)
@@ -29,10 +32,10 @@ export default function InquiryModal({ work, onClose }: Props) {
         setSent(true)
       } else {
         const data = await res.json()
-        setError(data.error || 'Ошибка отправки')
+        setError(data.error || t(locale, 'errorSend'))
       }
     } catch {
-      setError('Ошибка соединения')
+      setError(t(locale, 'errorConnection'))
     } finally {
       setLoading(false)
     }
@@ -51,19 +54,19 @@ export default function InquiryModal({ work, onClose }: Props) {
 
         {sent ? (
           <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-            <p style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.1em' }}>ОТПРАВЛЕНО</p>
-            <p style={{ marginTop: '0.5rem', color: '#666' }}>Мы свяжемся с вами в ближайшее время</p>
-            <button onClick={onClose} style={{ marginTop: '1.5rem', padding: '0.75rem 2rem', background: '#1a1a1a', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>ЗАКРЫТЬ</button>
+            <p style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', letterSpacing: '0.1em' }}>{t(locale, 'sent')}</p>
+            <p style={{ marginTop: '0.5rem', color: '#666' }}>{t(locale, 'sentMessage')}</p>
+            <button onClick={onClose} style={{ marginTop: '1.5rem', padding: '0.75rem 2rem', background: '#1a1a1a', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>{t(locale, 'close')}</button>
           </div>
         ) : (
           <>
-            <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.1em', marginBottom: '1.5rem' }}>ЗАЯВКА: {work.title.toUpperCase()}</p>
+            <p style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', letterSpacing: '0.1em', marginBottom: '1.5rem' }}>{t(locale, 'inquiryTitle')}: {work.title.toUpperCase()}</p>
 
             {['name', 'surname', 'email', 'phone'].map((field) => (
               <div key={field} style={{ marginBottom: '1rem' }}>
                 <input
                   type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
-                  placeholder={field === 'name' ? 'Имя *' : field === 'surname' ? 'Фамилия' : field === 'email' ? 'Email *' : 'Телефон *'}
+                  placeholder={field === 'name' ? t(locale, 'fieldName') : field === 'surname' ? t(locale, 'fieldSurname') : field === 'email' ? t(locale, 'fieldEmail') : t(locale, 'fieldPhone')}
                   value={form[field as keyof typeof form]}
                   onChange={e => setForm(prev => ({ ...prev, [field]: e.target.value }))}
                   style={{ width: '100%', padding: '0.75rem', border: '1px solid #1a1a1a', background: 'transparent', fontSize: '0.9rem', outline: 'none', fontFamily: 'inherit' }}
@@ -73,7 +76,7 @@ export default function InquiryModal({ work, onClose }: Props) {
 
             <div style={{ marginBottom: '1rem' }}>
               <textarea
-                placeholder='Сообщение (опционально)'
+                placeholder={t(locale, 'fieldMessage')}
                 value={form.message}
                 onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
                 rows={3}
@@ -88,7 +91,7 @@ export default function InquiryModal({ work, onClose }: Props) {
               disabled={loading}
               style={{ width: '100%', padding: '0.85rem', background: '#1a1a1a', color: '#fff', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-heading)', fontSize: '1rem', letterSpacing: '0.15em', opacity: loading ? 0.6 : 1 }}
             >
-              {loading ? 'ОТПРАВКА...' : 'ОТПРАВИТЬ'}
+              {loading ? t(locale, 'sending') : t(locale, 'send')}
             </button>
           </>
         )}

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { useLocale } from '@/lib/locale-context'
+import { t } from '@/lib/i18n'
 import type { Work, WorkType } from '@/types'
 import InkTransition from './SymbioteTransition'
 
@@ -25,6 +27,7 @@ export function BodyThemeFromWorkType({ type }: { type: WorkType }) {
 }
 
 export default function Gallery({ works }: GalleryProps) {
+  const { locale } = useLocale()
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<WorkType>('painting')
   const [transitioning, setTransitioning] = useState(false)
@@ -76,7 +79,7 @@ export default function Gallery({ works }: GalleryProps) {
       <section id="gallery" className="w-full max-w-none">
         {filtered.length === 0 ? (
           <p className="py-20 text-center text-sm text-[var(--page-muted)]">
-            Пока нет работ в этой категории
+            {t(locale, 'noWorks')}
           </p>
         ) : (
           <div
@@ -101,6 +104,7 @@ export default function Gallery({ works }: GalleryProps) {
 }
 
 function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
+  const { locale } = useLocale()
   return (
     <Link
       href={`/work/${work.id}`}
@@ -118,7 +122,7 @@ function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
         />
         {!work.is_available && (
           <span className="absolute top-3 right-3 z-10 bg-black/75 px-2.5 py-1 text-[10px] font-medium tracking-wider text-white uppercase">
-            Продана
+            {t(locale, 'sold')}
           </span>
         )}
         <div
@@ -130,7 +134,7 @@ function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
             {work.title}
           </h2>
           <p className="mt-0.5 font-heading text-lg tracking-wide text-white/90 sm:text-xl">
-            {work.price != null ? `${work.price} ₴` : 'Цену уточнять'}
+            {work.price != null ? `${work.price} ₴` : t(locale, 'priceOnRequest')}
           </p>
         </div>
       </div>
