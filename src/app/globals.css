@@ -7,7 +7,7 @@ body[data-theme="light"] {
   --page-accent: #1a1a1a;
   --page-muted: rgba(26, 26, 26, 0.55);
   --page-border: rgba(26, 26, 26, 0.12);
-  --page-header-bg: #fafaf8;
+  --page-header-bg: #ffffff;
 }
 
 body[data-theme="dark"] {

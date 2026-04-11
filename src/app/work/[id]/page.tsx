@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server'
 import type { Work } from '@/types'
 import ContactButtons from '@/components/ContactButtons'
 import Header from '@/components/Header'
+import WorkInquiryCTA from '@/components/WorkInquiryCTA'
 import { BodyThemeFromWorkType } from '@/components/Gallery'
 
 interface PageProps {
@@ -46,6 +47,8 @@ export default async function WorkPage({ params }: PageProps) {
             />
           </div>
         </div>
+
+        <WorkInquiryCTA work={{ id: work.id, title: work.title }} />
 
         <div className="space-y-4">
           <div className="flex items-start justify-between gap-4">
