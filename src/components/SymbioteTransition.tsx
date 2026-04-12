@@ -50,10 +50,10 @@ export default function InkTransition({ onMidpoint, onComplete, active, color }:
           midpointRef.current = true
           onMidpoint()
         }
-      }, 400)
+      }, 200)
       const endTimer = setTimeout(() => {
         setPhase('closing')
-      }, 820)
+      }, 420)
       return () => { clearTimeout(midTimer); clearTimeout(endTimer) }
     }
 
@@ -61,7 +61,7 @@ export default function InkTransition({ onMidpoint, onComplete, active, color }:
       const endTimer = setTimeout(() => {
         setPhase('idle')
         onComplete()
-      }, 820)
+      }, 420)
       return () => clearTimeout(endTimer)
     }
   }, [phase, onMidpoint, onComplete])
@@ -86,8 +86,8 @@ export default function InkTransition({ onMidpoint, onComplete, active, color }:
           backgroundSize: '100% 100%',
           filter: color === '#0a0a0a' ? 'brightness(0)' : 'brightness(0) invert(1)',
           animation: phase === 'opening'
-            ? 'inkOpen 0.8s steps(24) forwards'
-            : 'inkClose 0.8s steps(24) forwards',
+            ? 'inkOpen 0.4s steps(24) forwards'
+            : 'inkClose 0.4s steps(24) forwards',
         }}
       />
       <style>{`

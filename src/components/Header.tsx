@@ -112,23 +112,37 @@ function HeaderInner() {
               justifyContent: 'center',
             }}
           >
-            <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-              <Image
-                src="/logo-black.png"
-                alt="Logo"
-                width={48}
-                height={40}
-                style={{ objectFit: 'contain', display: 'block' }}
-                className="logo-black"
-              />
-              <Image
-                src="/logo-white.png"
-                alt="Logo"
-                width={48}
-                height={40}
-                style={{ objectFit: 'contain', display: 'none' }}
-                className="logo-white"
-              />
+            <Link href="/" style={{ display: 'flex', justifyContent: 'center' }}>
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  border: '1.5px solid currentColor',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '12px',
+                  flexShrink: 0,
+                }}
+              >
+                <Image
+                  src="/logo-black.png"
+                  alt="Logo"
+                  width={44}
+                  height={44}
+                  style={{ objectFit: 'contain' }}
+                  className="logo-black"
+                />
+                <Image
+                  src="/logo-white.png"
+                  alt="Logo"
+                  width={44}
+                  height={44}
+                  style={{ objectFit: 'contain' }}
+                  className="logo-white"
+                />
+              </div>
             </Link>
           </div>
           <div style={{ gridColumn: isDark ? 1 : 3, gridRow: 1 }} aria-hidden />
