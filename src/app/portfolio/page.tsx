@@ -1,56 +1,51 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import Header from '@/components/Header'
-import { BodyThemeFromWorkType } from '@/components/Gallery'
-import { useLocale } from '@/lib/locale-context'
-import { t } from '@/lib/i18n'
 
-type PortfolioRow = { name?: string | null; bio?: string | null }
+interface Portfolio {
+  id: string
+  name: string
+  bio: string | null
+}
 
-export default function PortfolioPage() {
-  const { locale } = useLocale()
-  const [portfolio, setPortfolio] = useState<PortfolioRow | null>(null)
+function PortfolioContent() {
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') === 'tattoo' ? 'tattoo' : 'painting'
+  const [portfolio, setPortfolio] = useState<Portfolio | null>(null)
 
   useEffect(() => {
     const supabase = createClient()
-    void supabase
-      .from('portfolio')
-      .select('*')
-      .single()
-      .then(({ data }) => setPortfolio(data))
-  }, [])
+    const table = tab === 'tattoo' ? 'portfolio_tattoo' : 'portfolio'
+    supabase.from(table).select('*').single().then(({ data }) => {
+      setPortfolio(data)
+    })
+  }, [tab])
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', tab === 'tattoo' ? 'dark' : 'light')
+  }, [tab])
 
   return (
-    <>
-      <BodyThemeFromWorkType type="painting" />
-      <Header />
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '4rem 2rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-          <div style={{ position: 'relative', width: '120px', height: '96px' }}>
-            <Image
-              src="/Danylo_Black_2x.png"
-              alt="Danil Art"
-              width={120}
-              height={96}
-              style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
-              priority
-            />
-          </div>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', letterSpacing: '0.15em', textAlign: 'center' }}>
-            {portfolio?.name?.toUpperCase() || t(locale, 'portfolioDefaultName')}
-          </h1>
-          <p style={{ textAlign: 'center', lineHeight: 1.6, maxWidth: '560px', opacity: 0.85, fontSize: '1rem' }}>
-            {t(locale, 'portfolioSubtitle')}
-          </p>
-          <div style={{ width: '60px', height: '1px', background: 'currentColor', opacity: 0.3 }} />
-          <p style={{ textAlign: 'center', lineHeight: 1.8, maxWidth: '560px', opacity: 0.8, fontSize: '1rem' }}>
-            {portfolio?.bio || ''}
-          </p>
-        </div>
-      </main>
-    </>
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '4rem 2rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', letterSpacing: '0.15em', textAlign: 'center' }}>
+          {portfolio?.name?.toUpperCase() || 'DANIL'}
+        </h1>
+        <div style={{ width: '60px', height: '1px', background: 'currentColor', opacity: 0.3 }} />
+        <p style={{ textAlign: 'center', lineHeight: 1.8, maxWidth: '560px', opacity: 0.8, fontSize: '1rem' }}>
+          {portfolio?.bio || ''}
+        </p>
+      </div>
+    </main>
+  )
+}
+
+export default function PortfolioPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '40vh' }} aria-hidden />}>
+      <PortfolioContent />
+    </Suspense>
   )
 }

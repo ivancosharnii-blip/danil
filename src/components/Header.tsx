@@ -73,7 +73,7 @@ function HeaderInner() {
             }}
           >
             <Link
-              href="/portfolio"
+              href={`/portfolio${tabParam ? `?tab=${tabParam}` : ''}`}
               className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
             >
               {translations[locale].portfolio}

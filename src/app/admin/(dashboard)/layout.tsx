@@ -44,6 +44,13 @@ export default async function DashboardLayout({
             <User size={16} />
             Портфолио
           </Link>
+          <Link
+            href="/admin/portfolio-tattoo"
+            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+          >
+            <User size={16} />
+            Портфолио тату
+          </Link>
         </nav>
         <form action={logout} className="border-t border-zinc-200 px-3 py-3">
           <button

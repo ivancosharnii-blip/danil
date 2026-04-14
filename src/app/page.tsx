@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import type { Work } from '@/types'
 import Header from '@/components/Header'
-import HeroTitle from '@/components/HeroTitle'
 import Gallery from '@/components/Gallery'
 
 export default async function HomePage() {
@@ -18,8 +17,6 @@ export default async function HomePage() {
     <>
       <Header />
       <main className="flex w-full flex-1 flex-col transition-[color] duration-[400ms]">
-        <HeroTitle />
-
         <Suspense fallback={<div className="min-h-[40vh]" aria-hidden />}>
           <Gallery works={works} />
         </Suspense>
