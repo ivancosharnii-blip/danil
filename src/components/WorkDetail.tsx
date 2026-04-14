@@ -8,8 +8,14 @@ import WorkInquiryCTA from '@/components/WorkInquiryCTA'
 import { useLocale } from '@/lib/locale-context'
 import { t } from '@/lib/i18n'
 
-export default function WorkDetail({ work }: { work: Work }) {
+interface Props {
+  work: Work
+  tab?: string
+}
+
+export default function WorkDetail({ work, tab }: Props) {
   const { locale } = useLocale()
+  const backHref = tab === 'tattoo' ? '/?tab=tattoo' : '/?tab=painting'
 
   return (
     <>
@@ -69,7 +75,7 @@ export default function WorkDetail({ work }: { work: Work }) {
             </div>
 
             <Link
-              href="/"
+              href={backHref}
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--page-muted)] transition-colors hover:text-[var(--page-text)]"
             >
               <ArrowLeft size={14} strokeWidth={2} />

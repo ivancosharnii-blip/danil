@@ -6,21 +6,23 @@ import { BodyThemeFromWorkType } from '@/components/Gallery'
 
 interface PageProps {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ tab?: string }>
 }
 
-export default async function WorkPage({ params }: PageProps) {
+export default async function WorkPage({ params, searchParams }: PageProps) {
   const { id } = await params
+  const { tab } = await searchParams
   const supabase = await createClient()
-  const { data } = await supabase.from('works').select('*').eq('id', id).single()
+  const { data: work } = await supabase.from('works').select('*').eq('id', id).single()
 
-  if (!data) notFound()
+  if (work === null) notFound()
 
-  const work = data as Work
+  const typedWork = work as Work
 
   return (
     <>
-      <BodyThemeFromWorkType type={work.type} />
-      <WorkDetail work={work} />
+      <BodyThemeFromWorkType type={typedWork.type} />
+      <WorkDetail work={typedWork} tab={tab} />
     </>
   )
 }

@@ -108,7 +108,7 @@ function FeedItem({ work, isTattoo, index }: { work: Work; isTattoo: boolean; in
   const { locale } = useLocale()
   return (
     <Link
-      href={`/work/${work.id}`}
+      href={`/work/${work.id}?tab=${isTattoo ? 'tattoo' : 'painting'}`}
       className="group relative block w-full animate-fadeInUp"
       style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
     >

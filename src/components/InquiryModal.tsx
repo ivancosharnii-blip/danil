@@ -43,11 +43,21 @@ export default function InquiryModal({ work, onClose }: Props) {
 
   return (
     <div
-      style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+      className="items-end md:items-center"
+      style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', padding: '1rem' }}
       onClick={onClose}
     >
       <div
-        style={{ background: '#fff', color: '#1a1a1a', padding: '2rem', maxWidth: '480px', width: '100%', position: 'relative' }}
+        style={{
+          background: '#fff',
+          color: '#1a1a1a',
+          padding: '2rem',
+          maxWidth: '480px',
+          width: '100%',
+          position: 'relative',
+          overflowY: 'auto',
+          maxHeight: '90vh',
+        }}
         onClick={e => e.stopPropagation()}
       >
         <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#1a1a1a' }}>×</button>
