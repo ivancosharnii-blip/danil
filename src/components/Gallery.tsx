@@ -85,7 +85,7 @@ export default function Gallery({ works }: GalleryProps) {
           <div
             className={`${
               activeTab === 'painting'
-                ? 'flex w-full flex-col gap-[2px] px-16 md:px-24 lg:px-32'
+                ? 'flex w-full flex-col gap-[2px] md:px-16 lg:px-24'
                 : 'grid grid-cols-2 md:grid-cols-3 gap-1 px-4'
             }`}
           >

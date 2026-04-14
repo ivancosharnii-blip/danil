@@ -63,7 +63,7 @@ function HeaderInner() {
           }}
         >
           <nav
-            className="flex flex-wrap items-center gap-6 text-sm font-medium tracking-wide text-[var(--page-muted)]"
+            className="flex flex-wrap items-center gap-3 text-sm font-medium tracking-wide text-[var(--page-muted)] md:gap-6"
             style={{
               gridColumn: isDark ? 3 : 1,
               gridRow: 1,
@@ -72,36 +72,31 @@ function HeaderInner() {
               transition: 'opacity 0.3s',
             }}
           >
-            <Link
-              href={`/portfolio${tabParam ? `?tab=${tabParam}` : ''}`}
-              className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
-            >
-              {translations[locale].portfolio}
-            </Link>
-            <Link
-              href="/contacts"
-              className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
-            >
-              {translations[locale].contacts}
-            </Link>
-            <div style={{ display: 'flex', gap: '4px' }}>
+            <div className="flex gap-1">
               {FLAGS.map(({ locale: l, flag }) => (
                 <button
                   key={l}
                   type="button"
                   onClick={() => setLocale(l)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '1.2rem',
-                    opacity: locale === l ? 1 : 0.4,
-                    padding: '2px 4px',
-                  }}
+                  className={`cursor-pointer border-0 bg-transparent p-0.5 text-base leading-none transition-opacity md:text-[1.2rem] ${locale === l ? 'opacity-100' : 'opacity-40'}`}
                 >
                   {flag}
                 </button>
               ))}
+            </div>
+            <div className="hidden items-center gap-6 md:flex">
+              <Link
+                href={`/portfolio${tabParam ? `?tab=${tabParam}` : ''}`}
+                className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
+              >
+                {translations[locale].portfolio}
+              </Link>
+              <Link
+                href="/contacts"
+                className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
+              >
+                {translations[locale].contacts}
+              </Link>
             </div>
           </nav>
           <div
@@ -112,35 +107,21 @@ function HeaderInner() {
               justifyContent: 'center',
             }}
           >
-            <Link href="/" style={{ display: 'flex', justifyContent: 'center' }}>
-              <div
-                style={{
-                  width: '80px',
-                  height: '80px',
-                  borderRadius: '50%',
-                  border: '1.5px solid currentColor',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '12px',
-                  flexShrink: 0,
-                }}
-              >
+            <Link href="/" className="flex justify-center">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[1.5px] border-current p-2 md:h-20 md:w-20 md:p-3">
                 <Image
                   src="/logo-black.png"
                   alt="Logo"
                   width={44}
                   height={44}
-                  style={{ objectFit: 'contain' }}
-                  className="logo-black"
+                  className="logo-black h-8 w-8 object-contain md:h-11 md:w-11"
                 />
                 <Image
                   src="/logo-white.png"
                   alt="Logo"
                   width={44}
                   height={44}
-                  style={{ objectFit: 'contain' }}
-                  className="logo-white"
+                  className="logo-white h-8 w-8 object-contain md:h-11 md:w-11"
                 />
               </div>
             </Link>
