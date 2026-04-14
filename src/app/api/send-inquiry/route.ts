@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
   try {
     await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: 'gabrineczdczd@gmail.com',
-      subject: `Заявка на работу: ${workTitle}`,
+      to: 'ivancosharnii@gmail.com',
+      subject: `[ДЛЯ КЛИЕНТА] Заявка на работу: ${workTitle}`,
       html: `
         <h2>Новая заявка с сайта</h2>
         <p><b>Работа:</b> ${workTitle}</p>
