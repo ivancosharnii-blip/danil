@@ -93,7 +93,7 @@ function HeaderInner() {
                 {translations[locale].portfolio}
               </Link>
               <Link
-                href="/contacts"
+                href={`/contacts?tab=${activeGalleryTab}`}
                 className="text-[var(--page-text)] transition-colors hover:text-[var(--page-accent)]"
               >
                 {translations[locale].contacts}
@@ -108,7 +108,7 @@ function HeaderInner() {
               justifyContent: 'center',
             }}
           >
-            <Link href="/" className="flex justify-center">
+            <Link href={`/?tab=${activeGalleryTab}`} className="flex justify-center">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[1.5px] border-current p-2 md:h-20 md:w-20 md:p-3">
                 <Image
                   src="/logo-black.png"
@@ -178,7 +178,7 @@ function HeaderInner() {
               {translations[locale].portfolio}
             </Link>
             <Link
-              href="/contacts"
+              href={`/contacts?tab=${activeGalleryTab}`}
               onClick={() => setMenuOpen(false)}
               style={{ fontSize: '1rem', letterSpacing: '0.1em', color: 'currentColor', textDecoration: 'none' }}
             >

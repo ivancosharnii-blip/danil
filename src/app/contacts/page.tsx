@@ -1,11 +1,21 @@
 'use client'
 
+import { Suspense, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Instagram, Facebook } from 'lucide-react'
 import { useLocale } from '@/lib/locale-context'
 import { t } from '@/lib/i18n'
 
-export default function ContactsPage() {
+function ContactsContent() {
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') === 'tattoo' ? 'tattoo' : 'painting'
   const { locale } = useLocale()
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', tab === 'tattoo' ? 'dark' : 'light')
+    return () => document.body.setAttribute('data-theme', 'light')
+  }, [tab])
+
   return (
     <div style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2rem' }}>
       <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', letterSpacing: '0.15em' }}>{t(locale, 'contactsTitle')}</h1>
@@ -18,5 +28,13 @@ export default function ContactsPage() {
         </a>
       </div>
     </div>
+  )
+}
+
+export default function ContactsPage() {
+  return (
+    <Suspense>
+      <ContactsContent />
+    </Suspense>
   )
 }
