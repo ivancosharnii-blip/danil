@@ -5,10 +5,10 @@ import type { Locale } from './i18n'
 const LocaleContext = createContext<{
   locale: Locale
   setLocale: (l: Locale) => void
-}>({ locale: 'ru', setLocale: () => {} })
+}>({ locale: 'ua', setLocale: () => {} })
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>('ru')
+  const [locale, setLocale] = useState<Locale>('ua')
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
       {children}

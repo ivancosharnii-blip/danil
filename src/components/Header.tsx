@@ -13,7 +13,7 @@ const GALLERY_TABS = [
 ]
 
 const FLAGS: { locale: Locale; flag: string }[] = [
-  { locale: 'ru', flag: '🇷🇺' },
+  { locale: 'ua', flag: '🇺🇦' },
   { locale: 'en', flag: '🇬🇧' },
   { locale: 'cs', flag: '🇨🇿' },
 ]

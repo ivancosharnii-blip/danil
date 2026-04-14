@@ -1,36 +1,36 @@
-export type Locale = 'ru' | 'en' | 'cs'
+export type Locale = 'ua' | 'en' | 'cs'
 
 export const translations = {
-  ru: {
-    paintings: 'Картины',
-    tattoo: 'Тату эскизы',
-    portfolio: 'Портфолио',
-    contacts: 'Контакты',
-    priceOnRequest: 'Цену уточнять',
-    sold: 'Продана',
+  ua: {
+    paintings: 'Картини',
+    tattoo: 'Тату ескізи',
+    portfolio: 'Портфоліо',
+    contacts: 'Контакти',
+    priceOnRequest: 'Ціну уточнювати',
+    sold: 'Продано',
     back: 'Назад',
-    inquiryButton: 'Оставить заявку',
+    inquiryButton: 'Залишити заявку',
     inquiryTitle: 'ЗАЯВКА',
-    fieldName: 'Имя *',
-    fieldSurname: 'Фамилия',
+    fieldName: "Ім'я *",
+    fieldSurname: 'Прізвище',
     fieldEmail: 'Email *',
     fieldPhone: 'Телефон *',
-    fieldMessage: 'Сообщение (опционально)',
-    send: 'ОТПРАВИТЬ',
-    sending: 'ОТПРАВКА...',
-    sent: 'ОТПРАВЛЕНО',
-    sentMessage: 'Мы свяжемся с вами в ближайшее время',
-    close: 'ЗАКРЫТЬ',
-    errorRequired: 'Заполните имя, email и телефон',
-    errorSend: 'Ошибка отправки',
-    errorConnection: 'Ошибка соединения',
-    noWorks: 'Пока нет работ в этой категории',
-    contactsTitle: 'КОНТАКТЫ',
-    portfolioSubtitle: 'Художник и тату-мастер',
+    fieldMessage: "Повідомлення (необов'язково)",
+    send: 'НАДІСЛАТИ',
+    sending: 'НАДСИЛАННЯ...',
+    sent: 'НАДІСЛАНО',
+    sentMessage: "Ми зв'яжемося з вами найближчим часом",
+    close: 'ЗАКРИТИ',
+    errorRequired: "Заповніть ім'я, email та телефон",
+    errorSend: 'Помилка відправлення',
+    errorConnection: "Помилка з'єднання",
+    noWorks: 'Поки немає робіт у цій категорії',
+    contactsTitle: 'КОНТАКТИ',
+    portfolioSubtitle: 'Художник і тату-майстер',
     portfolioDefaultName: 'DANIL',
-    heroTitle: 'КАРТИНЫ & ТАТу ЭСКИЗЫ',
+    heroTitle: 'КАРТИНИ & ТАТУ ЕСКІЗИ',
     heroSubtitle:
-      'Авторские работы — живопись, графика и уникальные эскизы для татуировок',
+      'Авторські роботи — живопис, графіка та унікальні ескізи для татуювань',
   },
   en: {
     paintings: 'Paintings',
@@ -96,6 +96,6 @@ export const translations = {
   },
 }
 
-export function t(locale: Locale, key: keyof typeof translations.ru): string {
-  return translations[locale][key] ?? translations.ru[key]
+export function t(locale: Locale, key: keyof typeof translations.ua): string {
+  return translations[locale][key] ?? translations.ua[key]
 }
