@@ -28,6 +28,7 @@ function HeaderInner() {
   const activeGalleryTab = tabParam === 'tattoo' ? 'tattoo' : 'painting'
 
   const [isDark, setIsDark] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [navOpacity, setNavOpacity] = useState(1)
   const prevIsDarkRef = useRef<boolean | null>(null)
 
@@ -126,8 +127,65 @@ function HeaderInner() {
               </div>
             </Link>
           </div>
-          <div style={{ gridColumn: isDark ? 1 : 3, gridRow: 1 }} aria-hidden />
+          <div
+            style={{
+              gridColumn: isDark ? 1 : 3,
+              gridRow: 1,
+              justifySelf: isDark ? 'start' : 'end',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'currentColor', padding: '4px' }}
+            >
+              {menuOpen ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              ) : (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <line x1="3" y1="7" x2="21" y2="7" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="17" x2="21" y2="17" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+
+        {menuOpen && (
+          <div
+            className="md:hidden"
+            style={{
+              borderTop: '1px solid rgba(0,0,0,0.1)',
+              paddingTop: '1rem',
+              paddingBottom: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+            }}
+          >
+            <Link
+              href={`/portfolio${tabParam ? `?tab=${tabParam}` : ''}`}
+              onClick={() => setMenuOpen(false)}
+              style={{ fontSize: '1rem', letterSpacing: '0.1em', color: 'currentColor', textDecoration: 'none' }}
+            >
+              {translations[locale].portfolio}
+            </Link>
+            <Link
+              href="/contacts"
+              onClick={() => setMenuOpen(false)}
+              style={{ fontSize: '1rem', letterSpacing: '0.1em', color: 'currentColor', textDecoration: 'none' }}
+            >
+              {translations[locale].contacts}
+            </Link>
+          </div>
+        )}
 
         {isHome ? (
           <nav className="flex flex-wrap justify-center gap-8 border-t border-[var(--page-text)]/10 pt-4 text-sm font-medium tracking-wide">

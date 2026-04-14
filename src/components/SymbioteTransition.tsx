@@ -9,13 +9,11 @@ interface Props {
 }
 
 export default function InkTransition({ onMidpoint, onComplete, active, color }: Props) {
-  const [phase, setPhase] = useState<'opening' | 'closing' | 'idle'>('idle')
-  const midpointRef = useRef(false)
+  const [phase, setPhase] = useState<'opening' | 'idle'>('idle')
   const bgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!active) return
-    midpointRef.current = false
     setPhase('opening')
   }, [active])
 
@@ -46,23 +44,13 @@ export default function InkTransition({ onMidpoint, onComplete, active, color }:
 
     if (phase === 'opening') {
       const midTimer = setTimeout(() => {
-        if (!midpointRef.current) {
-          midpointRef.current = true
-          onMidpoint()
-        }
+        onMidpoint()
       }, 200)
-      const endTimer = setTimeout(() => {
-        setPhase('closing')
-      }, 420)
-      return () => { clearTimeout(midTimer); clearTimeout(endTimer) }
-    }
-
-    if (phase === 'closing') {
       const endTimer = setTimeout(() => {
         setPhase('idle')
         onComplete()
-      }, 420)
-      return () => clearTimeout(endTimer)
+      }, 450)
+      return () => { clearTimeout(midTimer); clearTimeout(endTimer) }
     }
   }, [phase, onMidpoint, onComplete])
 
@@ -85,19 +73,13 @@ export default function InkTransition({ onMidpoint, onComplete, active, color }:
           backgroundPosition: '0 0',
           backgroundSize: '100% 100%',
           filter: color === '#0a0a0a' ? 'brightness(0)' : 'brightness(0) invert(1)',
-          animation: phase === 'opening'
-            ? 'inkOpen 0.4s steps(24) forwards'
-            : 'inkClose 0.4s steps(24) forwards',
+          animation: 'inkOpen 0.4s steps(24) forwards',
         }}
       />
       <style>{`
         @keyframes inkOpen {
           0%   { transform: translateY(-50%) translateX(-2%); }
           100% { transform: translateY(-50%) translateX(-98%); }
-        }
-        @keyframes inkClose {
-          0%   { transform: translateY(-50%) translateX(-98%); }
-          100% { transform: translateY(-50%) translateX(-2%); }
         }
       `}</style>
     </div>

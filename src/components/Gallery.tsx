@@ -89,11 +89,12 @@ export default function Gallery({ works }: GalleryProps) {
                 : 'grid grid-cols-2 md:grid-cols-3 gap-1 px-4'
             }`}
           >
-            {filtered.map((work) => (
+            {filtered.map((work, index) => (
               <FeedItem
                 key={work.id}
                 work={work}
                 isTattoo={activeTab === 'tattoo'}
+                index={index}
               />
             ))}
           </div>
@@ -103,12 +104,13 @@ export default function Gallery({ works }: GalleryProps) {
   )
 }
 
-function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
+function FeedItem({ work, isTattoo, index }: { work: Work; isTattoo: boolean; index: number }) {
   const { locale } = useLocale()
   return (
     <Link
       href={`/work/${work.id}`}
-      className="group relative block w-full"
+      className="group relative block w-full animate-fadeInUp"
+      style={{ animationDelay: `${index * 0.1}s`, opacity: 0 }}
     >
       <div
         className={`relative w-full bg-zinc-200 ${isTattoo ? 'aspect-square' : 'aspect-video'}`}
