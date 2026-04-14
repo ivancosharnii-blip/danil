@@ -53,7 +53,7 @@ function HeaderInner() {
   }, [isDark])
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-4 backdrop-blur-md transition-[background-color,border-color] duration-[400ms] ease-out">
+    <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-2 backdrop-blur-md transition-[background-color,border-color] duration-[400ms] ease-out">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6">
         <div
           style={{
@@ -173,7 +173,7 @@ function HeaderInner() {
 
 function HeaderFallback() {
   return (
-    <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-4 backdrop-blur-md">
+    <header className="sticky top-0 z-[100] border-b border-[var(--page-text)]/10 bg-[var(--page-header-bg)] py-2 backdrop-blur-md">
       <div className="mx-auto h-12 max-w-6xl px-6" aria-hidden />
     </header>
   )

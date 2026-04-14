@@ -76,7 +76,7 @@ export default function Gallery({ works }: GalleryProps) {
         color={pendingTab === 'tattoo' ? '#0a0a0a' : '#f5f5f3'}
       />
 
-      <section id="gallery" className="w-full max-w-none">
+      <section id="gallery" className="mt-8 w-full max-w-none">
         {filtered.length === 0 ? (
           <p className="py-20 text-center text-sm text-[var(--page-muted)]">
             {t(locale, 'noWorks')}
@@ -108,7 +108,7 @@ function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
   return (
     <Link
       href={`/work/${work.id}`}
-      className="relative block w-full"
+      className="group relative block w-full"
     >
       <div
         className={`relative w-full bg-zinc-200 ${isTattoo ? 'aspect-square' : 'aspect-video'}`}
@@ -126,10 +126,10 @@ function FeedItem({ work, isTattoo }: { work: Work; isTattoo: boolean }) {
           </span>
         )}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] bg-gradient-to-t from-black/75 via-black/35 to-transparent pt-16 pb-4 pl-4 sm:pt-20 sm:pb-5 sm:pl-6"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] bg-gradient-to-t from-black/75 via-black/35 to-transparent pt-16 pb-4 pl-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:pt-20 sm:pb-5 sm:pl-6"
           aria-hidden
         />
-        <div className="absolute inset-x-0 bottom-0 z-[2] px-4 pb-4 text-white sm:px-6 sm:pb-5">
+        <div className="absolute inset-x-0 bottom-0 z-[2] px-4 pb-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:px-6 sm:pb-5">
           <h2 className="font-heading text-2xl leading-tight tracking-wide uppercase sm:text-3xl md:text-4xl">
             {work.title}
           </h2>
