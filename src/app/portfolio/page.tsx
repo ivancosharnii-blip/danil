@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -30,20 +29,6 @@ function PortfolioContent() {
 
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '4rem 2rem' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <Link href="/" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          color: 'currentColor',
-          textDecoration: 'none',
-          fontSize: '0.85rem',
-          letterSpacing: '0.1em',
-          opacity: 0.6,
-        }}>
-          ← Назад
-        </Link>
-      </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
         <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', letterSpacing: '0.15em', textAlign: 'center' }}>
           {portfolio?.name?.toUpperCase() || 'DANIL'}

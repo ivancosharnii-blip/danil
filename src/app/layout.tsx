@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Inter } from 'next/font/google'
 import { LocaleProvider } from '@/lib/locale-context'
+import Header from '@/components/Header'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -34,7 +35,15 @@ export default function RootLayout({
         data-theme="light"
         className="flex min-h-full flex-col bg-[var(--page-bg)] font-sans text-[var(--page-text)] transition-[background-color,color] duration-[400ms] ease-out"
       >
-        <LocaleProvider>{children}</LocaleProvider>
+        <LocaleProvider>
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <footer style={{ textAlign: 'center', padding: '2rem', fontSize: '0.8rem', opacity: 0.4 }}>
+            © 2026 Danil Art
+          </footer>
+        </LocaleProvider>
       </body>
     </html>
   )

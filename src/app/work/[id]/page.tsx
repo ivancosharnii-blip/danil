@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import type { Work } from '@/types'
-import Header from '@/components/Header'
 import WorkDetail from '@/components/WorkDetail'
 import { BodyThemeFromWorkType } from '@/components/Gallery'
 
@@ -21,7 +20,6 @@ export default async function WorkPage({ params }: PageProps) {
   return (
     <>
       <BodyThemeFromWorkType type={work.type} />
-      <Header />
       <WorkDetail work={work} />
     </>
   )
